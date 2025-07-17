@@ -4,6 +4,7 @@ from data_indexing.mongo_loader import get_document_content
 import logging
 from data_indexing.chunker import chunk_text
 from data_indexing.chunk_enricher import enrich_chunks
+from data_indexing.embedder import embed_chunks
 
 logger = logging.getLogger(__name__)
 
@@ -19,7 +20,13 @@ def run_indexing_job():
     logger.info(f"Chunked {len(documents)} documents")
 
     logger.info("Enriching chunks...")
-    documents = enrich_chunks(documents)
-    logger.info(f"Enriched {len(documents)} documents")
+    chunk_records = enrich_chunks(documents)
+    logger.info(f"Enriched {len(chunk_records)} chunks")
+
+    logger.info("Embedding chunks...")
+    chunk_records = embed_chunks(chunk_records)
+    logger.info(f"Embedded {len(chunk_records)} chunks")
+
+
 
 

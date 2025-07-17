@@ -29,7 +29,7 @@ def enrich_chunks(documents: list[dict]) -> list[dict]:
 
     chunk_records = to_chunk_records(documents)
     logger.info(f"Enriched {len(documents)} documents into {len(chunk_records)} chunks")
-    return documents
+    return chunk_records
 
 
 def clean_text(text: str) -> str:
