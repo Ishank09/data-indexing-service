@@ -29,7 +29,7 @@ def run_indexing_job():
     chunk_records = embed_chunks(chunk_records)
     logger.info(f"Embedded {len(chunk_records)} chunks")
 
-    logger.info(f"Saving chunks to {utils.get_env_var('QDRANT_COLLECTION_NAME')}...")
+    logger.info(f"Saving chunks to {utils.get_env_var('VECTOR_DB_COLLECTION_NAME')}...")
     upsert_chunks(chunk_records)
     logger.info(f"Saved {len(chunk_records)} chunks")
 
