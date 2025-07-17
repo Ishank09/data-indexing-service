@@ -40,7 +40,7 @@ def is_database_exists(client:MongoClient, db_name:str) -> bool:
     return db_name in client.list_database_names()
 
 def is_collection_exists(client:MongoClient, db_name:str, collection_name:str) -> bool:
-    return collection_name in client.list_database_names()
+    return collection_name in client[db_name].list_collection_names()
 
 def get_mongo_client():
     logger.info("Getting MongoDB client...")

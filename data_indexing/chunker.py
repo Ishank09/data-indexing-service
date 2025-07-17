@@ -5,8 +5,8 @@ import logging
 logger = logging.getLogger(__name__)
 
 def chunk_text(documents: list[dict]) -> list[dict]:
-    CHUNK_SIZE = get_env_var("TOKENIZATION_CHUNK_SIZE")
-    CHUNK_OVERLAP = get_env_var("TOKENIZATION_CHUNK_OVERLAP")
+    CHUNK_SIZE = int(get_env_var("TOKENIZATION_CHUNK_SIZE"))
+    CHUNK_OVERLAP = int(get_env_var("TOKENIZATION_CHUNK_OVERLAP"))
     ENCODING_NAME = get_env_var("TOKENIZATION_ENCODING_NAME")
     logger.info(f"Chunking text with chunk size {CHUNK_SIZE}, chunk overlap {CHUNK_OVERLAP}, encoding name {ENCODING_NAME}")
     text_splitter = CharacterTextSplitter.from_tiktoken_encoder(
