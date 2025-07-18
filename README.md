@@ -74,8 +74,20 @@ VECTOR_DB_URL=http://localhost:6333
 VECTOR_DB_COLLECTION_NAME=document_chunks
 VECTOR_DB_EMBEDDING_SIZE=1024
 
+# Alternative Qdrant Configuration (used in retriever)
+QDRANT_URL=http://localhost:6333
+QDRANT_COLLECTION_NAME=document_chunks
+
+# Retrieval Configuration
+RETRIEVER_TOP_K=5
+
 # NLP Configuration
 KEYWORD_EXTRACTION_TOP_N=10
+
+# Prompt Configuration
+INCLUDE_METADATA=True
+MAX_CONTEXT_CHARS=4000
+PROMPT_TYPE=qa
 ```
 
 ## 🚀 Usage
@@ -180,6 +192,12 @@ Input documents should have the following structure:
 | `VECTOR_DB_COLLECTION_NAME` | Qdrant collection name | - | ✅ |
 | `VECTOR_DB_EMBEDDING_SIZE` | Embedding vector dimension | - | ✅ |
 | `KEYWORD_EXTRACTION_TOP_N` | Number of keywords to extract | 10 | ✅ |
+| `RETRIEVER_TOP_K` | Number of top relevant chunks to retrieve | - | ✅ |
+| `QDRANT_URL` | Alternative Qdrant URL (used in retriever) | - | ✅ |
+| `QDRANT_COLLECTION_NAME` | Alternative collection name (used in retriever) | - | ✅ |
+| `INCLUDE_METADATA` | Whether to include metadata in prompts | - | ✅ |
+| `MAX_CONTEXT_CHARS` | Maximum characters in context for prompts | - | ✅ |
+| `PROMPT_TYPE` | Type of prompt template to use | - | ✅ |
 
 ## 🔧 Development
 
