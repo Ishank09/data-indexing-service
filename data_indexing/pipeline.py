@@ -33,6 +33,8 @@ def run_indexing_job():
     upsert_chunks(chunk_records)
     logger.info(f"Saved {len(chunk_records)} chunks")
 
+    logger.info("Indexing job completed successfully")
+
 
 
 
