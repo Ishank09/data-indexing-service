@@ -1,6 +1,7 @@
 from qdrant_client import QdrantClient
 from FlagEmbedding import FlagModel
 from data_indexing import utils
+from data_indexing.embedder import load_embedder
 import logging
 
 logger = logging.getLogger(__name__)
@@ -69,7 +70,7 @@ def embed_user_query(query: str):
         - EMBEDDER_MODEL_NAME: Name of the embedding model to use
     """
     logger.info(f"embed_user_query() function started - query length: {len(query)} chars")
-    encoder = FlagModel(utils.get_env_var("EMBEDDER_MODEL_NAME"))
+    encoder = load_embedder()  # Use cached model from embedder module
     embedding = encoder.encode(query)
     logger.info("embed_user_query() function completed - query embedded")
     return embedding

@@ -5,6 +5,9 @@ from tqdm import tqdm
 
 logger = logging.getLogger(__name__)
 
+# Global model cache to avoid reloading
+_model_cache = {}
+
 def load_embedder():
     """
     Loads and initializes the embedding model for text vectorization.
@@ -21,8 +24,16 @@ def load_embedder():
     """
     logger.info("load_embedder() function started")
     model_name = utils.get_env_var("EMBEDDER_MODEL_NAME")
+    
+    # Check if model is already cached
+    if model_name in _model_cache:
+        logger.info(f"load_embedder() function completed - using cached model: {model_name}")
+        return _model_cache[model_name]
+    
+    # Load model and cache it
     model = FlagModel(model_name)
-    logger.info(f"load_embedder() function completed - loaded model: {model_name}")
+    _model_cache[model_name] = model
+    logger.info(f"load_embedder() function completed - loaded and cached model: {model_name}")
     return model
 
 def embed_chunks(chunk_records: list[dict]):
