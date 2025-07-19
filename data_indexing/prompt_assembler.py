@@ -34,10 +34,13 @@ def build_prompt_context(query: str, relevant_chunks: list[ScoredPoint]):
     logger.info(f"build_prompt_context() function started - query: {query[:50]}..., chunks: {len(relevant_chunks)}")
     include_metadata = bool(utils.get_env_var("INCLUDE_METADATA"))
     max_context_chars = int(utils.get_env_var("MAX_CONTEXT_CHARS"))
+    max_each_chunk_chars = int(utils.get_env_var("MAX_EACH_CHUNK_CHARS"))
     context = ""
     for chunk in relevant_chunks:
         payload = chunk.payload
         text = payload.get("chunk_text", "") if payload else ""
+        if max_each_chunk_chars != -1 and len(text) > max_each_chunk_chars:
+            text = text[:max_each_chunk_chars] + "..."
         if include_metadata:
             meta = []
             if payload and payload.get("location"):
@@ -51,7 +54,8 @@ def build_prompt_context(query: str, relevant_chunks: list[ScoredPoint]):
             snippet = (", ".join(meta) + "\n" if meta else "") + text
         else:
             snippet = text + "\n"
-        if len(context) + len(snippet) > max_context_chars:
+   
+        if max_context_chars != -1 and len(context) + len(snippet) > max_context_chars:
             break
         context += snippet
     prompt = render_prompt(
